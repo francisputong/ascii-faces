@@ -13,3 +13,7 @@ export const getRelativeTime = (date) => {
     return relativeTime;
   }
 };
+
+export const uppercaseFirstLetter = (text) => {
+  return `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
+};

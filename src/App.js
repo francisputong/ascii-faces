@@ -6,6 +6,7 @@ import ProductCards from "./components/ProductCards/ProductCards";
 import NavBar from "./components/NavBar/NavBar";
 import { getAd } from "./ads/randomAd";
 import { getProducts } from "./api/products";
+import { uppercaseFirstLetter } from "../src/util/dataFormat";
 import useStyles from "./styles";
 
 const App = () => {
@@ -78,28 +79,22 @@ const App = () => {
 
   const classes = useStyles();
 
-  if (products.length === 0) {
-    return (
-      <div>
-        <NavBar setSort={setSort} />
-        <div className={classes.initialLoad}>
-          <CircularProgress size="40px" />
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div>
       <NavBar setSort={setSort} />
       <div className={classes.container}>
         <Typography variant="h6" color="textPrimary" component="p">
-          Sort by: {sort.charAt(0).toUpperCase()}
-          {sort.slice(1)}
+          Sort by: {uppercaseFirstLetter(sort)}
         </Typography>
-        <ProductCards products={products} lastProductRef={lastProductRef} />
+        {products.length > 0 && (
+          <ProductCards products={products} lastProductRef={lastProductRef} />
+        )}
         {loading && (
-          <div className={classes.center}>
+          <div
+            className={
+              products.length > 0 ? classes.center : classes.initialLoad
+            }
+          >
             <CircularProgress />
           </div>
         )}

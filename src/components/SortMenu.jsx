@@ -4,6 +4,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import SortIcon from "@material-ui/icons/Sort";
 
+import { uppercaseFirstLetter } from "../util/dataFormat";
+
 const sortOptions = [{ name: "size" }, { name: "price" }, { name: "date" }];
 
 const SortMenu = ({ setSort }) => {
@@ -43,7 +45,7 @@ const SortMenu = ({ setSort }) => {
             value="size"
             onClick={(e) => handleClose(e, option)}
           >
-            {`${option.name.charAt(0).toUpperCase()}${option.name.slice(1)}`}
+            {uppercaseFirstLetter(option.name)}
           </MenuItem>
         ))}
       </Menu>
