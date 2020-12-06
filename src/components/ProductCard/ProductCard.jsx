@@ -13,7 +13,6 @@ const ProductCard = ({ product: { size, price, face, date } }) => {
   const fontsize = { fontSize: `${size}px` };
 
   const handleClick = (text) => {
-    console.log("WEWE");
     alert(`${text}\nYou bought me!`);
   };
 
