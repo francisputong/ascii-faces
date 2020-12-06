@@ -74,14 +74,13 @@ const App = () => {
         setCacheProducts(data);
       }
       if (data.length < 20) setEnd(true);
-      console.log(products.length);
     } catch (err) {
       console.log(err.response);
     }
 
     setIsLoading(false);
   };
-  console.log(products.length);
+
   const classes = useStyles();
 
   return (
