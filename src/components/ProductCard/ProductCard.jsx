@@ -69,7 +69,7 @@ const ProductCard = ({ product: { size, price, face, date } }) => {
           )}
         </div>
       </CardContent>
-      <CardActions style={classes.floatRight}>
+      <CardActions className={classes.floatRight}>
         <Button
           color="primary"
           variant="contained"
