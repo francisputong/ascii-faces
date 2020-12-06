@@ -16,7 +16,7 @@ const ProductCards = ({ products, lastProductRef }) => {
       {products.map((product, i) => {
         return (
           <Grid
-            ref={products.length === i + 9 ? lastProductRef : null}
+            ref={products.length === i + 4 ? lastProductRef : null}
             key={i}
             item
             xs={12}
