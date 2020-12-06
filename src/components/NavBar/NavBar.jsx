@@ -3,10 +3,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
-import FilterMenu from "../FilterMenu";
+import SortMenu from "../SortMenu";
 import useStyles from "./styles";
 
-const NavBar = ({ setFilter }) => {
+const NavBar = ({ setSort }) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -15,7 +15,7 @@ const NavBar = ({ setFilter }) => {
           <Typography variant="h6" className={classes.title}>
             ASCII FACES
           </Typography>
-          <FilterMenu setFilter={setFilter} />
+          <SortMenu setSort={setSort} />
         </Toolbar>
       </AppBar>
     </div>

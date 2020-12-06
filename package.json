@@ -23,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "json-server": "json-server --delay 1000 --watch db.json  --port 5000",
+    "json-server": "json-server --delay 500 --watch db.json  --port 5000",
     "dev": "concurrently \"npm start\" \"npm run json-server\"",
     "eject": "react-scripts eject"
   },

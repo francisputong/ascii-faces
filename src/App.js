@@ -10,7 +10,7 @@ import useStyles from "./styles";
 
 const App = () => {
   const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState("size");
+  const [sort, setSort] = useState("size");
   const [pageNumber, setPageNumber] = useState(0);
   const [adApperanceCounter, setAdAppearanceCounter] = useState(0);
   const [end, setEnd] = useState(false);
@@ -35,7 +35,7 @@ const App = () => {
   useEffect(() => {
     setAdAppearanceCounter(0);
     getInitialProducts();
-  }, [filter]);
+  }, [sort]);
 
   useEffect(() => {
     if (products.length === 0) return;
@@ -48,7 +48,7 @@ const App = () => {
     setEnd(false);
     setPageNumber(0);
     try {
-      const { data } = await getProducts(filter, 0);
+      const { data } = await getProducts(sort, 0);
       setProducts([...data, ...getAd()]);
       setAdAppearanceCounter(0 + data.length);
 
@@ -62,7 +62,7 @@ const App = () => {
   const getMoreProducts = async () => {
     setIsLoading(true);
     try {
-      const { data } = await getProducts(filter, pageNumber);
+      const { data } = await getProducts(sort, pageNumber);
       setAdAppearanceCounter(adApperanceCounter + data.length);
       if (Number.isInteger(adApperanceCounter / 20) && data.length === 20) {
         setProducts([...products, ...data, ...getAd()]);
@@ -81,7 +81,7 @@ const App = () => {
   if (products.length === 0) {
     return (
       <div>
-        <NavBar setFilter={setFilter} />
+        <NavBar setSort={setSort} />
         <div className={classes.initialLoad}>
           <CircularProgress size="40px" />
         </div>
@@ -91,11 +91,11 @@ const App = () => {
 
   return (
     <div>
-      <NavBar setFilter={setFilter} />
+      <NavBar setSort={setSort} />
       <div className={classes.container}>
         <Typography variant="h6" color="textPrimary" component="p">
-          Filter by: {filter.charAt(0).toUpperCase()}
-          {filter.slice(1)}
+          Sort by: {sort.charAt(0).toUpperCase()}
+          {sort.slice(1)}
         </Typography>
         <ProductCards products={products} lastProductRef={lastProductRef} />
         {loading && (

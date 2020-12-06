@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import FilterListIcon from "@material-ui/icons/FilterList";
+import SortIcon from "@material-ui/icons/Sort";
 
-const filterOptions = [{ name: "size" }, { name: "price" }, { name: "date" }];
+const sortOptions = [{ name: "size" }, { name: "price" }, { name: "date" }];
 
-const FilterMenu = ({ setFilter }) => {
+const SortMenu = ({ setSort }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -15,7 +15,7 @@ const FilterMenu = ({ setFilter }) => {
 
   const handleClose = (e, option) => {
     setAnchorEl(null);
-    if (option.name) setFilter(option.name);
+    if (option.name) setSort(option.name);
   };
 
   return (
@@ -26,9 +26,9 @@ const FilterMenu = ({ setFilter }) => {
         color="primary"
         variant="contained"
         onClick={handleClick}
-        startIcon={<FilterListIcon />}
+        startIcon={<SortIcon />}
       >
-        Filter
+        Sort
       </Button>
       <Menu
         id="simple-menu"
@@ -37,7 +37,7 @@ const FilterMenu = ({ setFilter }) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {filterOptions.map((option, i) => (
+        {sortOptions.map((option, i) => (
           <MenuItem
             key={i}
             value="size"
@@ -51,4 +51,4 @@ const FilterMenu = ({ setFilter }) => {
   );
 };
 
-export default FilterMenu;
+export default SortMenu;

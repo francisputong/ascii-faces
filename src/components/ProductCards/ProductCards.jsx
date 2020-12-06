@@ -14,27 +14,19 @@ const ProductCards = ({ products, lastProductRef }) => {
       spacing={3}
     >
       {products.map((product, i) => {
-        if (products.length === i + 8) {
-          return (
-            <Grid
-              ref={lastProductRef}
-              key={i}
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-            >
-              <ProductCard product={product} />
-            </Grid>
-          );
-        } else {
-          return (
-            <Grid key={i} item xs={12} sm={6} md={4} lg={3}>
-              <ProductCard product={product} />
-            </Grid>
-          );
-        }
+        return (
+          <Grid
+            ref={products.length === i + 9 ? lastProductRef : null}
+            key={i}
+            item
+            xs={12}
+            sm={6}
+            md={4}
+            lg={3}
+          >
+            <ProductCard product={product} />
+          </Grid>
+        );
       })}
     </Grid>
   );
