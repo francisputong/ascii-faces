@@ -6,40 +6,11 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import useStyles from "./styles.js";
+import { toCents, getRelativeTime } from "../../util/dataFormat";
 
 const ProductCard = ({ product: { size, price, face, date } }) => {
   const classes = useStyles();
   const fontsize = { fontSize: `${size}px` };
-
-  const toCents = (price) => {
-    return (price / 100).toFixed(2);
-  };
-
-  const getDuration = (seconds) => {
-    const epochSeconds = {
-      day: 86400,
-      hour: 3600,
-      minute: 60,
-    };
-
-    for (let second in epochSeconds) {
-      const interval = Math.floor(seconds / epochSeconds[second]);
-      if (interval > 0) {
-        return {
-          interval,
-          second,
-        };
-      }
-    }
-  };
-
-  const fromNow = (date) => {
-    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
-    const { interval, second } = getDuration(seconds);
-    const isPlural = interval === 1 ? "" : "s";
-    if (interval > 7 && second === "day") return date;
-    return `${interval} ${second}${isPlural} ago`;
-  };
 
   return (
     <Card className={classes.root} raised>
@@ -64,7 +35,7 @@ const ProductCard = ({ product: { size, price, face, date } }) => {
           </div>
           {date && (
             <Typography variant="body2" color="textSecondary" component="p">
-              {fromNow(date)}
+              {getRelativeTime(date)}
             </Typography>
           )}
         </div>
