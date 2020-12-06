@@ -11,6 +11,7 @@ import useStyles from "./styles";
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [cacheProducts, setCacheProducts] = useState([]);
   const [sort, setSort] = useState("size");
   const [pageNumber, setPageNumber] = useState(0);
   const [adApperanceCounter, setAdAppearanceCounter] = useState(0);
@@ -24,7 +25,7 @@ const App = () => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting || entries[1]?.isIntersecting) {
           setPageNumber(pageNumber + 1);
         }
       });
@@ -34,6 +35,7 @@ const App = () => {
   );
 
   useEffect(() => {
+    setEnd(false);
     setAdAppearanceCounter(0);
     getInitialProducts();
   }, [sort]);
@@ -41,18 +43,19 @@ const App = () => {
   useEffect(() => {
     if (products.length === 0) return;
     if (!end) getMoreProducts();
+    const cached = cacheProducts.splice(0, cacheProducts.length);
+    setProducts([...products, ...cached]);
   }, [pageNumber]);
 
   const getInitialProducts = async () => {
     setIsLoading(true);
     setProducts([]);
-    setEnd(false);
     setPageNumber(0);
     try {
       const { data } = await getProducts(sort, 0);
       setProducts([...data, ...getAd()]);
       setAdAppearanceCounter(0 + data.length);
-
+      setPageNumber(1);
       if (data.length < 20) setEnd(true);
     } catch (err) {
       console.log(err.response);
@@ -66,17 +69,19 @@ const App = () => {
       const { data } = await getProducts(sort, pageNumber);
       setAdAppearanceCounter(adApperanceCounter + data.length);
       if (Number.isInteger(adApperanceCounter / 20) && data.length === 20) {
-        setProducts([...products, ...data, ...getAd()]);
+        setCacheProducts([...data, ...getAd()]);
       } else {
-        setProducts([...products, ...data]);
+        setCacheProducts(data);
       }
       if (data.length < 20) setEnd(true);
+      console.log(products.length);
     } catch (err) {
       console.log(err.response);
     }
+
     setIsLoading(false);
   };
-
+  console.log(products.length);
   const classes = useStyles();
 
   return (
