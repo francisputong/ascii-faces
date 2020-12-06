@@ -1,0 +1,39 @@
+{
+  "ads": [
+    {
+      "id": 201,
+      "size": 16,
+      "price": 0,
+      "face": "This is ad number 1",
+      "date": false
+    },
+    {
+      "id": 202,
+      "size": 16,
+      "price": 0,
+      "face": "This is ad number 2",
+      "date": false
+    },
+    {
+      "id": 203,
+      "size": 16,
+      "price": 0,
+      "face": "This is ad number 3",
+      "date": false
+    },
+    {
+      "id": 204,
+      "size": 16,
+      "price": 0,
+      "face": "This is ad number 4",
+      "date": false
+    },
+    {
+      "id": 205,
+      "size": 16,
+      "price": 0,
+      "face": "This is ad number 5",
+      "date": false
+    }
+  ]
+}
