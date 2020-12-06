@@ -12,6 +12,11 @@ const ProductCard = ({ product: { size, price, face, date } }) => {
   const classes = useStyles();
   const fontsize = { fontSize: `${size}px` };
 
+  const handleClick = (text) => {
+    console.log("WEWE");
+    alert(`${text}\nYou bought me!`);
+  };
+
   return (
     <Card className={classes.root} raised>
       <CardContent className={classes.content}>
@@ -45,6 +50,7 @@ const ProductCard = ({ product: { size, price, face, date } }) => {
           color="primary"
           variant="contained"
           startIcon={date && <ShoppingCartIcon />}
+          onClick={() => handleClick(face)}
         >
           {date ? "Buy" : "View Ad"}
         </Button>
