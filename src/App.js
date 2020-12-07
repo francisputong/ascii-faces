@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography";
 
 import ProductCards from "./components/ProductCards/ProductCards";
 import NavBar from "./components/NavBar/NavBar";
+import OrderByMenu from "./components/OrderByMenu";
 import { getAd } from "./ads/randomAd";
 import { getProducts } from "./api/products";
 import { uppercaseFirstLetter } from "../src/util/dataFormat";
@@ -13,6 +14,7 @@ const App = () => {
   const [products, setProducts] = useState([]);
   const [cacheProducts, setCacheProducts] = useState([]);
   const [sort, setSort] = useState("size");
+  const [orderBy, setOrderBy] = useState("asc");
   const [pageNumber, setPageNumber] = useState(0);
   const [adApperanceCounter, setAdAppearanceCounter] = useState(0);
   const [end, setEnd] = useState(false);
@@ -38,7 +40,7 @@ const App = () => {
     setEnd(false);
     setAdAppearanceCounter(0);
     getInitialProducts();
-  }, [sort]);
+  }, [sort, orderBy]);
 
   useEffect(() => {
     if (products.length === 0) return;
@@ -47,12 +49,13 @@ const App = () => {
     setProducts([...products, ...cached]);
   }, [pageNumber]);
 
+  //Called on first page load
   const getInitialProducts = async () => {
     setIsLoading(true);
     setProducts([]);
     setPageNumber(0);
     try {
-      const { data } = await getProducts(sort, 0);
+      const { data } = await getProducts(sort, 0, orderBy);
       setProducts([...data, ...getAd()]);
       setAdAppearanceCounter(0 + data.length);
       setPageNumber(1);
@@ -63,10 +66,11 @@ const App = () => {
     setIsLoading(false);
   };
 
+  //Called when user scrolls down
   const getMoreProducts = async () => {
     setIsLoading(true);
     try {
-      const { data } = await getProducts(sort, pageNumber);
+      const { data } = await getProducts(sort, pageNumber, orderBy);
       setAdAppearanceCounter(adApperanceCounter + data.length);
       if (Number.isInteger(adApperanceCounter / 20) && data.length === 20) {
         setCacheProducts([...data, ...getAd()]);
@@ -77,7 +81,6 @@ const App = () => {
     } catch (err) {
       console.log(err.response);
     }
-
     setIsLoading(false);
   };
 
@@ -87,9 +90,14 @@ const App = () => {
     <div>
       <NavBar setSort={setSort} />
       <div className={classes.container}>
-        <Typography variant="h6" color="textPrimary" component="p">
-          Sort by: {uppercaseFirstLetter(sort)}
-        </Typography>
+        <div className={classes.sortOrder}>
+          <Typography variant="h6" color="textPrimary" component="p">
+            Sort by: {uppercaseFirstLetter(sort)}
+          </Typography>{" "}
+          <div className={classes.order}>
+            <OrderByMenu setOrderBy={setOrderBy} orderBy={orderBy} />
+          </div>
+        </div>
         {products.length > 0 && (
           <ProductCards products={products} lastProductRef={lastProductRef} />
         )}

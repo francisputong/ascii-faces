@@ -13,4 +13,10 @@ export default makeStyles({
     alignItems: "center",
     height: "100vh",
   },
+  sortOrder: {
+    display: "flex",
+  },
+  order: {
+    marginLeft: "10px",
+  },
 });
